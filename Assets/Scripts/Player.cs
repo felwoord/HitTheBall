@@ -7,6 +7,10 @@ public class Player : MonoBehaviour {
 	private GameObject guideBall;
 
 	public float movSpeed;
+	public float jumpSpeed;
+	public float shootSpeed;
+
+	private int jumpNum = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +18,7 @@ public class Player : MonoBehaviour {
 		guideBall = GameObject.Find ("GuideBall");
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.anyKey) {
@@ -24,16 +28,34 @@ public class Player : MonoBehaviour {
 
 	private void Movement(){
 		if(Input.GetKeyDown(KeyCode.S)){
-			Debug.Log ("SS");
+			Vector2 diretion = -(transform.position - guideBall.transform.position);
+
+			playerRB.velocity = diretion * shootSpeed;
 		}
 		if (Input.GetKey (KeyCode.A)) {
-			playerRB.velocity = new Vector2 (-10, playerRB.velocity.y);
+			//playerRB.velocity = new Vector2 (-movSpeed, playerRB.velocity.y);
+			playerRB.AddForce (new Vector2(-movSpeed, 0));
 		}
 		if (Input.GetKey (KeyCode.D)) {
-			
+			//playerRB.velocity = new Vector2 (movSpeed, playerRB.velocity.y);
+			playerRB.AddForce (new Vector2(movSpeed, 0));
+		}
+		if (Input.GetKeyDown (KeyCode.W)) {
+			if (jumpNum > 0) {
+				jumpNum--;
+				playerRB.velocity = new Vector2 (playerRB.velocity.x, jumpSpeed);
+			}
+		}
+	}
+
+	public void OnCollisionEnter2D(Collision2D col){
+		if (col.gameObject.tag == "Block") {
+			jumpNum = 2;
+		}
+
+		if (col.gameObject.tag == "GuideBall") {
+			playerRB.velocity = new Vector2 (0, 0);
 		}
 	}
 }
-
-
-///chao tag = Block
+	
