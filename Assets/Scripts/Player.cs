@@ -28,16 +28,14 @@ public class Player : MonoBehaviour {
 
 	private void Movement(){
 		if(Input.GetKeyDown(KeyCode.S)){
-			Vector2 diretion = -(transform.position - guideBall.transform.position);
+			Vector2 diretion = guideBall.transform.position - transform.position;
 
 			playerRB.velocity = diretion * shootSpeed;
 		}
 		if (Input.GetKey (KeyCode.A)) {
-			//playerRB.velocity = new Vector2 (-movSpeed, playerRB.velocity.y);
 			playerRB.AddForce (new Vector2(-movSpeed, 0));
 		}
 		if (Input.GetKey (KeyCode.D)) {
-			//playerRB.velocity = new Vector2 (movSpeed, playerRB.velocity.y);
 			playerRB.AddForce (new Vector2(movSpeed, 0));
 		}
 		if (Input.GetKeyDown (KeyCode.W)) {
@@ -55,6 +53,10 @@ public class Player : MonoBehaviour {
 
 		if (col.gameObject.tag == "GuideBall") {
 			playerRB.velocity = new Vector2 (0, 0);
+
+			if (jumpNum == 0) {
+				jumpNum = 1;
+			}
 		}
 	}
 }
