@@ -32,11 +32,13 @@ public class Player : MonoBehaviour {
 
 			playerRB.velocity = diretion * shootSpeed;
 		}
-		if (Input.GetKey (KeyCode.A)) {
-			playerRB.AddForce (new Vector2(-movSpeed, 0));
+		if (Input.GetKeyDown (KeyCode.A)) {
+			//playerRB.AddForce (new Vector2(-movSpeed, 0));
+			playerRB.velocity = new Vector2 (-movSpeed, playerRB.velocity.y);
 		}
-		if (Input.GetKey (KeyCode.D)) {
-			playerRB.AddForce (new Vector2(movSpeed, 0));
+		if (Input.GetKeyDown (KeyCode.D)) {
+			//playerRB.AddForce (new Vector2(movSpeed, 0));
+			playerRB.velocity = new Vector2 (movSpeed, playerRB.velocity.y);
 		}
 		if (Input.GetKeyDown (KeyCode.W)) {
 			if (jumpNum > 0) {
